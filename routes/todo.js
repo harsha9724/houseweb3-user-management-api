@@ -6,8 +6,52 @@ const mongoose = require('mongoose');
 
 router.use(bodyparser());
 
-// get all todos
+/**
+ * ******* swagger schema ********
+ */
+/**
+ * @swagger
+ *  components:
+ *      schema:
+ *          todo:
+ *              type: object
+ *              properties:
+ *                    title:
+ *                          type: string
+ *                    completed:
+ *                          type: boolean
+ *                          default: false
+ *          updatetodo:
+ *              type: object
+ *              properties:
+ *                    title:
+ *                          type: string
+ *                    completed:
+ *                          type: boolean
+ */
 
+
+
+/**
+ * ******** to get all todos available***********
+ */
+/**
+ * @swagger
+ * /api/v1/todos:
+ *  get:
+ *      summary: To get all todos from mongoDB
+ *      description: This api is used to fetch the data from mongoDb
+ *      responses:
+ *          200:
+ *              description: this api is used to fetch the data from mongoDb
+ *              content:
+ *                  application/json:
+ *                         schema:
+ *                             type: array
+ *                             items:
+ *                                $ref: "#components/schema/todo"
+ *
+ */
 router.get('/todos', async (req, res) => {
     try {
       const todos = await Todo.find();
@@ -19,6 +63,27 @@ router.get('/todos', async (req, res) => {
 
 
 // create todo
+
+/**
+ * @swagger
+ * /api/v1/todos:
+ *  post:
+ *      summary: This api is  to create the todo from user
+ *      description: This api is to store data to database.
+ *      requestBody:
+ *             required: true
+ *             content:
+ *                 application/json:
+ *                      schema:
+ *                          $ref: "#components/schema/todo"
+ *      responses:
+ *          200:
+ *              description: todo created successfully
+ *          500:
+ *              description: failed
+ *
+ */
+
 
 router.post('/todos', async (req, res) => {
     if(!req.body.title){
@@ -38,6 +103,39 @@ router.post('/todos', async (req, res) => {
 
 
 // update todo
+
+/**
+ * ****** update the products ********
+ */
+
+/**
+ * @swagger
+ * /api/v1/todos/{id}:
+ *  put:
+ *      summary: To update todo form the user
+ *      description: This api is used to update the data
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: todo id is required
+ *            schema:
+ *               type: string
+ *      requestBody:
+ *             required: true
+ *             content:
+ *                 application/json:
+ *                      schema:
+ *                          $ref: "#components/schema/updatetodo"
+ *      responses:
+ *          200:
+ *              description: updated successfully
+ *          500:
+ *              description: failed
+ *
+ */
+
+
 
 router.put('/todos/:id', async (req, res) => {
     try {
@@ -64,6 +162,27 @@ router.put('/todos/:id', async (req, res) => {
 
 
 // delete todo
+
+/**
+ * @swagger
+ * /api/v1/todos/{id}:
+ *  delete:
+ *      summary: This api is for delete todo
+ *      description: This api is used to delete the data
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: todo id is required
+ *            schema:
+ *               type: string
+ *      responses:
+ *          200:
+ *              description: deleted successfully
+ *          500:
+ *              description: todo not found
+ *
+ */
 
 router.delete('/todos/:id', async (req, res) => {
     try {
