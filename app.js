@@ -4,7 +4,7 @@ const cors = require('cors');
 const dotenv = require("dotenv");
 const mongoose=require("mongoose");
 dotenv.config()
-
+const todo_router = require('./routes/todo')
 
 app.use(cors())
 app.use(express.json());
@@ -22,6 +22,9 @@ mongoose.connect(`${mangoURL}/todos`);
 app.get('/',(req,res)=>{
     res.send("Server running successfully")
 })
+
+app.use('/api/v1',todo_router)
+
 app.get("*", (req, res) => {
     res.status(404).send("404 PAGE NOT FOUND")
 })
