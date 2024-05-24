@@ -45,9 +45,9 @@ const swaggerSpec=swaggerJSDoc(options);
 app.use("/api-doc",swaggerUI.serve,swaggerUI.setup(swaggerSpec));
 
 
-const mangoURL = process.env.NODE_ENV === 'test' ? process.env.TEST_DB_URL : process.env.MANGO_URL;
+const mongoURL = process.env.NODE_ENV === 'test' ? `${process.env.TEST_DB_URL}/test_todos` : `${process.env.MONGO_URL}/${process.env.DB_NAME}`;
 
-mongoose.connect(`${mangoURL}`);
+mongoose.connect(`${mongoURL}`);
   
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));

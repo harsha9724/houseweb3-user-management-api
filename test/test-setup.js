@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   if (mongoose.connection.readyState === 0) {
-    const url  =  process.env.TEST_DB_URL ;
+    const url  =  `${process.env.TEST_DB_URL}/test_todos` ;
     await mongoose.connect(url);
   }
 };
