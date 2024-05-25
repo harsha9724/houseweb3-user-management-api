@@ -13,6 +13,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
+  await mongoose.connection.db.dropDatabase();
   await disconnectDB();
   console.log('Mongoose connection closed');
   if (server && server.close) {
