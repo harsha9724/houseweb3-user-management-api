@@ -10,13 +10,19 @@ app.use(express.json());
 app.use('/api/v1', todo_router);
 
 beforeAll(async () => {
-
-  await mongoose.connect(process.env.TEST_DB_URL);
+  const dbUrl = process.env.TEST_DB_URL;
+  console.log('TEST_DB_URL:', dbUrl); // Print the TEST_DB_URL for debugging
+  if (!dbUrl) {
+    throw new Error("Environment variable TEST_DB_URL is not set");
+  }
+  await mongoose.connect(dbUrl);
 });
 
 afterAll(async () => {
-
-  await mongoose.connection.db.dropDatabase();
+  if (mongoose.connection.db) {
+    await mongoose.connection.db.dropDatabase();
+  }
+  await mongoose.disconnect();
   await mongoose.disconnect();
 });
 

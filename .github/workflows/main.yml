@@ -27,10 +27,13 @@ jobs:
       - name: Set up environment variables
         run: echo "TEST_DB_URL=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
 
+      - name: Print environment variables
+        run: printenv
+
       - name: Install dependencies
         run: npm ci
 
       - name: Run tests
         env:
-          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}  # Ensure the secret is set in your GitHub repository settings
+          TEST_DB_URL: ${{ env.TEST_DB_URL }}
         run: npm test
