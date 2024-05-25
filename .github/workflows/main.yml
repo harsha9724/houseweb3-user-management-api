@@ -9,6 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,10 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: List installed dependencies
-        run: npm ls
-
       - name: Run tests
         env:
-          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}  # Ensure the secret is set in your GitHub repository settings
         run: npm test
