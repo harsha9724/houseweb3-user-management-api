@@ -1,30 +1,25 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const {server,app} = require('../app'); 
+const express = require('express')
+// const {server,app} = require('../app'); 
 const Todo = require('../models/todo');
 const { connectDB, disconnectDB } = require('./test-setup');
+const dotenv = require("dotenv");
+dotenv.config()
+const app = express();
+const todo_router = require('../routes/todo')
+app.use(express.json());
+app.use('/api/v1', todo_router);
 
 beforeAll(async () => {
-  await connectDB();
-});
 
-beforeEach(async () => {
-  await Todo.deleteOne({});
+  await mongoose.connect(`${process.env.TEST_DB_URL}`);
 });
 
 afterAll(async () => {
-  await mongoose.connection.db.dropDatabase();
-  await disconnectDB();
-  console.log('Mongoose connection closed');
-  if (server && server.close) {
-    await new Promise((resolve, reject) => {
-      server.close((err) => {
-        if (err) return reject(err);
-        resolve();
-      });
-    });
-  }
 
+  await mongoose.connection.db.dropDatabase();
+  await mongoose.disconnect();
 });
 
 describe('Todo API', () => {
