@@ -18,11 +18,8 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Display Node.js version
-        run: node -v
-
-      - name: Display npm version
-        run: npm -v
+      - name: Set up environment variables
+        run: echo "TEST_DB_URL=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm ci
@@ -31,4 +28,6 @@ jobs:
         run: npm ls
 
       - name: Run tests
+        env:
+          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
         run: npm test
