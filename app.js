@@ -45,7 +45,7 @@ const swaggerSpec=swaggerJSDoc(options);
 app.use("/api-doc",swaggerUI.serve,swaggerUI.setup(swaggerSpec));
 
 
-const mongoURL = process.env.NODE_ENV === 'test' ? `${process.env.TEST_DB_URL}/test_todos` : `${process.env.MONGO_URL}/${process.env.DB_NAME}`;
+const mongoURL = process.env.NODE_ENV === 'test' ? `${process.env.TEST_DB_URL}` : `${process.env.MONGO_URL}`;
 
 mongoose.connect(`${mongoURL}`);
   
