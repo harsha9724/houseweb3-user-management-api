@@ -1,9 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const express = require('express')
-// const {server,app} = require('../app'); 
 const Todo = require('../models/todo');
-const { connectDB, disconnectDB } = require('./test-setup');
 const dotenv = require("dotenv");
 dotenv.config()
 const app = express();
@@ -13,7 +11,7 @@ app.use('/api/v1', todo_router);
 
 beforeAll(async () => {
 
-  await mongoose.connect(`${process.env.TEST_DB_URL}`);
+  await mongoose.connect(process.env.TEST_DB_URL);
 });
 
 afterAll(async () => {
