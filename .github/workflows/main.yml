@@ -3,7 +3,7 @@ name: NodeJs todo management GitHub Action
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build:
