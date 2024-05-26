@@ -27,6 +27,8 @@ jobs:
           context: .
           target: test
           load: true
+          build-args: |
+            TEST_DB_URL=${{ secrets.TEST_DB_URL }}
           
       - name: Build and push
         uses: docker/build-push-action@v5
